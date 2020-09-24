@@ -1,5 +1,5 @@
 import {order1} from '../../reducers/orders-1'
-import {array} from "prop-types";
+
 
 export const GET_PHOTOS_REQUEST = 'GET_PHOTOS_REQUEST'
 
@@ -8,13 +8,13 @@ export const GET_PHOTOS_REQUEST = 'GET_PHOTOS_REQUEST'
 
 function math(arr) {
     for (var z = 0; z < arr.length; z++) {
-        arr[z].uv = (arr[z].problem / arr[z].notProblem) * 100
-        arr[z].pw = 100 - arr[z].uv
+        arr[z].cancelled = (arr[z].problem /(arr[z].problem + arr[z].notProblem)) * 100
+        arr[z].closed = 100 - arr[z].cancelled
     }
     return arr
 }
 
-function sortByDate(arr) {
+export function sortByDate(arr) {
     for (var z = 0; z < arr.length; z++) {
         // eslint-disable-next-line no-undef
         arr[z].name = arr[z].name.replace(/-/g, "");
@@ -27,11 +27,11 @@ function sortByDate(arr) {
 }
 
 function getArray() {
-    var data = [], name, summ = 0, pv = 2400, amt = 2400, flag = 0, date, problem = 0, notProblem = 0
+    var data = [], flag = 0, date, problem = 0, notProblem = 0
     for (var i = 0; i < order1.deliveryOrders.length; i++) {
         date = order1.deliveryOrders[i].deliveryDate.slice(0, order1.deliveryOrders[i].deliveryDate.indexOf(' '))
 
-        if (order1.deliveryOrders[i].problem === null) {
+        if (order1.deliveryOrders[i].statusCode === "CLOSED") {
             for (var z = 0; z < data.length; z++) {
                 if (data[z].name === date) {
                     data[z].notProblem = data[z].notProblem + 1
@@ -58,13 +58,10 @@ function getArray() {
             }
 
         if (flag === 0) {
-            data.push({name: date, amt: 100, problem: problem, notProblem: notProblem})
-            flag = 1
+            data.push({name: date, problem: problem, notProblem: notProblem})
+
         }
-
-
     }
-console.log(data)
 
     data = math(data);
     data = sortByDate(data);
@@ -75,7 +72,6 @@ console.log(data)
 
 export function task_1_3(data) {
     data = getArray();
-    console.log(data)
     return dispatch => {
         dispatch({
             type: GET_PHOTOS_REQUEST,

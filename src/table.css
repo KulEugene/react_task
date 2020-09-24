@@ -3,12 +3,12 @@ table {
     border-collapse: collapse;
     width: 100%;
     text-align: center;
-    min-width: 1000px;
-    max-width: 1000px;
+   max-width: 90%;
 
 }
 
 table th {
+    width: auto;
     font-weight: normal;
     font-size: 27px;
     color: #ffffff;
@@ -23,7 +23,7 @@ table td {
 
 table td, table.iksweb th {
     white-space: pre-wrap;
-    padding: 28px 0px;
+    padding: 28px 0;
     line-height: 13px;
     vertical-align: middle;
     border: 1px solid #354251;

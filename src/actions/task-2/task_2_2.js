@@ -1,10 +1,9 @@
 import { order1 } from '../../reducers/orders-1'
+
 export const GET_PHOTOS_REQUEST = 'GET_PHOTOS_REQUEST'
 
-function getArray() {
-    var data=[],name,summ = 0,pv = 2400,amt=2400,flag=0
-
-
+export function getArray2(data) {
+    var name,summ = 0,flag=0
     for(var i=0;i<order1.deliveryOrders.length;i++){
         if(order1.deliveryOrders[i].statusCode === "CLOSED") {
             name = order1.deliveryOrders[i].guests[0].name
@@ -13,7 +12,7 @@ function getArray() {
             }
             for(var z=0;z<data.length;z++){
                 if(data[z].name===name){
-                    data[z].uv=data[z].uv+summ
+                    data[z].profit=data[z].profit+summ
                     summ=0
                     flag=1
                     break
@@ -28,7 +27,7 @@ function getArray() {
 
                 }
                 else {
-                    data.push({name: name, uv: summ, pv: 100, amt: 100})
+                    data.push({name: name,profit:summ, products:0, loss:0})
                     summ = 0
                     flag = 1
                 }
@@ -45,7 +44,8 @@ function getArray() {
 
 
 export function task_2_2(data) {
-    data = getArray();
+    data=[]
+    data = getArray2(data);
     return dispatch => {
         dispatch({
             type: GET_PHOTOS_REQUEST,

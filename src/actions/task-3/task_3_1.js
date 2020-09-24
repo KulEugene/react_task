@@ -2,7 +2,7 @@ import {order1} from "../../reducers/orders-1";
 export const GET_PHOTOS_REQUEST = 'GET_PHOTOS_REQUEST'
 
 function getArray() {
-    var data=[],name,pv = 2400,amt=2400,flag=0
+    var data=[],name,flag=0
 
     for(var i=0;i<order1.deliveryOrders.length;i++){
         for(var r=0;r<order1.deliveryOrders[i].items.length;r++) {
@@ -31,7 +31,6 @@ function getArray() {
 
 export function task_3_1(data) {
     data = getArray();
-    console.log(data)
     return dispatch => {
         dispatch({
             type: GET_PHOTOS_REQUEST,
